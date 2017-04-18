@@ -15,8 +15,10 @@
 package ucas.ir.lucene;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -172,7 +174,8 @@ public class CreateIndexServlet extends HttpServlet {
 		News news = new News();
 		try {
 			JsonParser jParser = new JsonParser();
-			JsonObject jObject = (JsonObject) jParser.parse(new FileReader(path));
+//			JsonObject jObject = (JsonObject) jParser.parse(new FileReader(path));
+			JsonObject jObject = (JsonObject) jParser.parse(new InputStreamReader(new FileInputStream(path),"UTF-8"));
 			String id = jObject.get("id").getAsString();
 			String title = jObject.get("title").getAsString().trim();
 			String time = jObject.get("date").getAsString().trim();
