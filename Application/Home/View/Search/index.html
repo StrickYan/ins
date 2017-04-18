@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Inspiration</title>
+    <include file="Public/header" />
+	<link rel="stylesheet" href="__PUBLIC__/css/result.css">
+</head>
+<body>
+    <div id="logo">
+    	<a href="../ins">
+    		<img alt="logo" src="__PUBLIC__/img/default/Inspiration_logo.png">
+    	</a>
+    </div>
+
+	<form action="search" method="get">
+	    <div id="search_box" class="container">       
+	    	<div class="row">
+				<div class="col-xs-12">
+					<div class="input-group">
+						<input type="text" class="form-control" id="query" name="q" value="{$input.q}" placeholder="公文通/id/标题/内容/发文单位" autocomplete="off">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit" id="btn_submit">Go</button>
+						</span>
+					</div>
+					<button type="button" class="btn btn-default btn-sm" id="sort_select">
+		                <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+	                </button>
+				</div>
+			</div>
+		</div>
+		<div id="sort_pick">
+			<label class="checkbox-inline">
+				<input type="radio" name="sort" value="relevancy" checked> 相关度
+			</label>
+			<label class="checkbox-inline">
+				<input type="radio" name="sort" value="time"> 时间
+			</label>
+			<label class="checkbox-inline">
+				<input type="radio" name="sort" value="heat"> 热度
+			</label>
+	    </div>
+	</form>
+	<div id="page" data-page-num="{$input.p}">
+	    <div class="result" id="tips"></div>
+
+	    <div id="page_controller" class="result">
+		    <div class="row">
+			    <div class="col-xs-4" id="pre_page"> 
+	                <a href="">
+			            <span class="glyphicon glyphicon-chevron-left"></span> 
+			        </a>
+			    </div>
+			    <div class="col-xs-4" id="cur_page">
+			        <a href="">Page</a>
+			    </div>
+			    <div class="col-xs-4" id="next_page">
+			        <a href="">
+			            <span class="glyphicon glyphicon-chevron-right"></span>
+			        </a>
+			    </div>
+		    </div>
+	    </div>
+	</div>
+
+	<div id="footerinfo">
+		<p>&copy2017 Inspiration</p>
+	</div>
+	
+	{$script_page}
+    <include file="Public/footer" />
+	<script src="__PUBLIC__/js/result.js"></script>
+</body>
+</html>

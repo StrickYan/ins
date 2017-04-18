@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>ins</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>SearchServlet</display-name>
+    <servlet-name>SearchServlet</servlet-name>
+    <servlet-class>ucas.ir.action.SearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchServlet</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <exception-type>java.lang.IndexOutOfBoundsException</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
+  <servlet>
+    <description></description>
+    <display-name>CreateIndexServlet</display-name>
+    <servlet-name>CreateIndexServlet</servlet-name>
+    <servlet-class>ucas.ir.lucene.CreateIndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateIndexServlet</servlet-name>
+    <url-pattern>/createIndex</url-pattern>
+  </servlet-mapping>
+</web-app>
