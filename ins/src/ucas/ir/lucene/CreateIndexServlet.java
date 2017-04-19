@@ -125,6 +125,7 @@ public class CreateIndexServlet extends HttpServlet {
 				doc.add(new TextField("news_source", news.getSource(), Store.YES)); //索引 分词
 				doc.add(new StoredField("news_show", news.getShow())); //不索引 只存储 
 				doc.add(new StoredField("news_posttime", news.getTime())); //不索引 只存储
+				doc.add(new StringField("sign", "123836", Store.YES)); //索引 不分词  该字段目的是为了返回全部索引记录
 				
 				//doc.add(new TextField("news_keywords", news.getKeyword(), Store.YES));
 				//doc.add(new TextField("news_total", news.getTotal(), Store.YES));

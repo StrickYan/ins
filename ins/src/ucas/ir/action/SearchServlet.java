@@ -85,6 +85,7 @@ public class SearchServlet extends HttpServlet {
 		// handle form parm 
 		String query = request.getParameter("q"); // query str
 		query = new String(query.getBytes("iso8859-1"), "UTF-8");
+		query = query.trim();
 
 		String pageNum = request.getParameter("p"); // page 
 		int p = pageNum == null ? 1 : Integer.parseInt(pageNum);
@@ -103,8 +104,11 @@ public class SearchServlet extends HttpServlet {
 		
 		String rets = "";//api return json data
 		boolean success = false; //query result
-
-		if (query != null && " ".equals(query) != true) {
+		
+		if(query == null || "".equals(query)){
+			query = "123836"; //没有输入关键词则展示全部索引记录
+		}
+		if(query != null && "".equals(query) != true) {
 			ArrayList<News> newsList = getTopDoc(query, indexPathStr);
 			System.out.println("newslist length:" + newsList.size());
 
@@ -113,7 +117,7 @@ public class SearchServlet extends HttpServlet {
 			System.out.println(page.toString());
 
 			// result sort by time
-			if ("time".equals(sortMethod)) {
+			if ("time".equals(sortMethod) || "123836".equals(query)) {
 				Collections.sort(newsList, new SortByTime());
 			}
 			else if ("heat".equals(sortMethod)) {
@@ -162,8 +166,8 @@ public class SearchServlet extends HttpServlet {
 			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 			rets = gson.toJson(map); //map to json
 
-		} else {
-			// request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
+		else {
 			success = false;
 		}
 		
@@ -195,7 +199,7 @@ public class SearchServlet extends HttpServlet {
 			DirectoryReader dReader = DirectoryReader.open(directory);
 			IndexSearcher searcher = new IndexSearcher(dReader);
 
-			String[] fields = { "news_title", "news_article", "news_id", "news_source" };
+			String[] fields = { "news_title", "news_article", "news_id", "news_source", "sign" };
 			
 			// set analyzer type
 			//Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
@@ -208,8 +212,8 @@ public class SearchServlet extends HttpServlet {
 			SimpleHTMLFormatter fors = new SimpleHTMLFormatter("<span>", "</span>");
 			Highlighter highlighter = new Highlighter(fors, scorer);
 
-			// return 1000 results
-			TopDocs topDocs = searcher.search(query2, 1000);
+			// return 999 results
+			TopDocs topDocs = searcher.search(query2, 999);
 			if (topDocs != null) {
 				totalNews = topDocs.totalHits;
 				System.out.println("query result number:" + totalNews);
