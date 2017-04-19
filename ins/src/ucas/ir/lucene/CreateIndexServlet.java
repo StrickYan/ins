@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -73,6 +74,9 @@ public class CreateIndexServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		long startTime = System.currentTimeMillis();// start time
 		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
 		// 第一步：创建分词器
         //Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
 		Analyzer analyzer = new IKAnalyzer(true); 
@@ -108,10 +112,12 @@ public class CreateIndexServlet extends HttpServlet {
 		while (iter.hasNext()) {
 			String file_name = iter.next();
 			// System.out.println("当前iter:" + file_name);
+			out.write("cur iter: " + file_name +"\n");
 			News news = getNews(jsonFileRoute + file_name);
 			Document doc = new Document();
 			if (news != null) {
 				//System.out.println(news.getTitle());
+				out.write("title: " + news.getTitle() +"\n");
 
 				doc.add(new StringField("news_id", news.getId(), Store.YES)); //索引 不分词
 				doc.add(new TextField("news_title", news.getTitle(), Store.YES)); //索引 分词
@@ -140,10 +146,21 @@ public class CreateIndexServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		long endTime = System.currentTimeMillis();// end time
 		long Time = endTime - startTime;
-		System.out.println("create index cost " + Time + " ms.");
-		System.out.println("index create success!");
+		
+		out.write("startTime: " + startTime +"\n");
+		out.write("endTime: " + endTime +"\n");
+		out.write("create index cost : " + Time + " ms." +"\n");
+		
+		out.write("This time operate index's number: " + filenamelist.size() +"\n");
+		out.write("index create success!" +"\n");
+		//System.out.println("create index cost " + Time + " ms.");
+		//System.out.println("index create success!");
+		
+		out.flush();
+		out.close();
 	}
 
 	/**
@@ -165,7 +182,7 @@ public class CreateIndexServlet extends HttpServlet {
 			}
 		}
 
-		System.out.println(arrlist.size());
+		//System.out.println(arrlist.size());
 		return arrlist;
 	}
 
@@ -175,7 +192,7 @@ public class CreateIndexServlet extends HttpServlet {
 		try {
 			JsonParser jParser = new JsonParser();
 //			JsonObject jObject = (JsonObject) jParser.parse(new FileReader(path));
-			JsonObject jObject = (JsonObject) jParser.parse(new InputStreamReader(new FileInputStream(path),"UTF-8"));
+			JsonObject jObject = (JsonObject) jParser.parse(new InputStreamReader(new FileInputStream(path),"utf-8"));
 			String id = jObject.get("id").getAsString();
 			String title = jObject.get("title").getAsString().trim();
 			String time = jObject.get("date").getAsString().trim();
@@ -194,7 +211,7 @@ public class CreateIndexServlet extends HttpServlet {
 			news = new News(id, title, keyword, time, source, artical, total, uRL, reply, show);
 			return news;
 		} catch (Exception e) {
-			System.out.println("get news error: "+e);
+			System.out.println("get news error: "+e +"\n");
 			return null;
 		}
 	}
