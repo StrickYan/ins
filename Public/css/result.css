@@ -102,8 +102,14 @@ body {
     color: red;
 }
 
+.source-line {
+    font-size: 12px;
+    line-height: 12px;
+    padding-top: 8px; 
+}
+
 .content {
-    padding-top: 11px;
+    padding-top: 8px;
 }
 
 .content p {
@@ -116,6 +122,7 @@ body {
 }
 
 .url {
+    padding-top: 2px;
     color: #2a9457;
 }
 

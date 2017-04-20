@@ -48,6 +48,7 @@ function getQueryRusult(page) {
                 // result += "<a href='http://www.szu.edu.cn/board/view.asp?id=" + data['retData']['newslist'][i]['id'] + "'>" + data['retData']['newslist'][i]['Title'] + "</a>";
                 result += "<a href='search/details?id=" + data['retData']['newslist'][i]['id'] + "'>" + data['retData']['newslist'][i]['Title'] + "</a>";
                 result += "</div>";
+                result += "<div class='source-line'>" + data['retData']['newslist'][i]['Source'] +" > " + data['retData']['newslist'][i]['Time'] + "</div>";
                 result += "<div class='content'>";
                 result += "<p>" + data['retData']['newslist'][i]['Artical'] + "...</p>";
                 result += "</div>";
