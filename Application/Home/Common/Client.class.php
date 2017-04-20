@@ -21,7 +21,12 @@ class Client
 
     public function __construct()
     {
-        $this->server = $_SERVER;
+        $this->server   = $_SERVER;
+        $this->ip       = "";
+        $this->location = "";
+        $this->brower   = "";
+        $this->lang     = "";
+        $this->os       = "";
     }
 
     // 获得访客浏览器类型
@@ -143,12 +148,18 @@ class Client
     // 解析$_SERVER, 得到相关结果
     public function test()
     {
+        $this->ip       = $this->Getip();
+        $this->location = $this->getIpAddress($this->ip);
+        $this->brower   = $this->GetBrowser();
+        $this->lang     = $this->GetLang();
+        $this->os       = $this->GetOs();
+
         $data = array(
-            'ip'       => $this->Getip(), //ip
-            'location' => $this->getIpAddress(), //ip所在地
-            'brower'   => $this->GetBrowser(), //浏览器类型
-            'lang'     => $this->GetLang(), //浏览器语言
-            'os'       => $this->GetOs(), //操作系统
+            'ip'       => $this->ip, //ip
+            'location' => $this->location, //ip所在地
+            'brower'   => $this->brower, //浏览器类型
+            'lang'     => $this->lang, //浏览器语言
+            'os'       => $this->os, //操作系统
         );
         return $data;
     }
@@ -156,13 +167,19 @@ class Client
     // 解析自定义的$server, 得到相关结果
     public function testClient($server = array())
     {
-        $this->server = $server;
-        $data         = array(
-            'ip'       => $this->Getip(), //ip
-            'location' => $this->getIpAddress(), //ip所在地
-            'brower'   => $this->GetBrowser(), //浏览器类型
-            'lang'     => $this->GetLang(), //浏览器语言
-            'os'       => $this->GetOs(), //操作系统
+        $this->server   = $server;
+        $this->ip       = $this->Getip();
+        $this->location = $this->getIpAddress($this->ip);
+        $this->brower   = $this->GetBrowser();
+        $this->lang     = $this->GetLang();
+        $this->os       = $this->GetOs();
+
+        $data = array(
+            'ip'       => $this->ip, //ip
+            'location' => $this->location, //ip所在地
+            'brower'   => $this->brower, //浏览器类型
+            'lang'     => $this->lang, //浏览器语言
+            'os'       => $this->os, //操作系统
         );
         return $data;
     }
