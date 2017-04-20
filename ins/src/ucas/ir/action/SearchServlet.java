@@ -224,7 +224,7 @@ public class SearchServlet extends HttpServlet {
 							topDocs.scoreDocs[i].doc, fields[0], analyzer);
 					Fragmenter fragment = new SimpleSpanFragmenter(scorer);
 					highlighter.setTextFragmenter(fragment);
-					highlighter.setTextFragmenter(new SimpleFragmenter(200)); // summary's length
+					highlighter.setTextFragmenter(new SimpleFragmenter(100)); // summary's length
 
 					String hl_title = highlighter.getBestFragment(tokenStream, doc.get("news_title"));
 
@@ -232,9 +232,17 @@ public class SearchServlet extends HttpServlet {
 							fields[1], analyzer);
 					String hl_summary = highlighter.getBestFragment(tokenStream, doc.get("news_article"));
 					
+					String article = "";
+					try{
+						article = doc.get("news_article").substring(0, 100);
+					}
+					catch (Exception e){
+						article = "";
+					}
+					
 					News news = new News(doc.get("news_id"), hl_title != null ? hl_title : doc.get("news_title"),
 							doc.get("news_keywords"), doc.get("news_posttime"), doc.get("news_source"),
-							hl_summary != null ? hl_summary : doc.get("news_article"), doc.get("news_total"),
+							hl_summary != null ? hl_summary : article, doc.get("news_total"),
 							doc.get("news_url"), doc.get("news_reply"), doc.get("news_show"));
 					newsList.add(news);
 				}
