@@ -43,6 +43,8 @@ import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
@@ -211,9 +213,17 @@ public class SearchServlet extends HttpServlet {
 			QueryScorer scorer = new QueryScorer(query2, fields[0]);
 			SimpleHTMLFormatter fors = new SimpleHTMLFormatter("<span>", "</span>");
 			Highlighter highlighter = new Highlighter(fors, scorer);
-
+			
 			// return 999 results
-			TopDocs topDocs = searcher.search(query2, 999);
+			TopDocs topDocs = null;
+			if(key == "123836"){
+				Sort sort=new Sort(new SortField("news_id", SortField.Type.INT, true));
+				topDocs = searcher.search(query2, 99, sort);
+			}
+			else {
+				topDocs = searcher.search(query2, 999);
+			}
+			
 			if (topDocs != null) {
 				totalNews = topDocs.totalHits;
 				System.out.println("query result number:" + totalNews);
