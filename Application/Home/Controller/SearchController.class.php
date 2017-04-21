@@ -124,7 +124,8 @@ class SearchController extends BaseController
         }
 
         $data_show = array(
-            'content' => $ret['content'],
+            // 'content' => $ret['content'],
+            'content' => preg_replace('/<img[^>]+>/i','', $ret['content']), //过滤img标签
             'time'    => ($end - $start),
         );
 
