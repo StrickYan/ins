@@ -119,10 +119,10 @@ public class SearchServlet extends HttpServlet {
 			System.out.println(page.toString());
 
 			// result sort by time
-			if ("time".equals(sortMethod) || "123836".equals(query)) {
+			if ("123836".equals(query) != true && "time".equals(sortMethod)) {
 				Collections.sort(newsList, new SortByTime());
 			}
-			else if ("heat".equals(sortMethod)) {
+			else if ("123836".equals(query) != true && "heat".equals(sortMethod)) {
 				Collections.sort(newsList, new SortByHeat());
 			}
 
