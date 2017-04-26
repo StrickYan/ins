@@ -207,21 +207,21 @@ public class SearchServlet extends HttpServlet {
 			//Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
 			Analyzer analyzer = new IKAnalyzer(true); 
 			
-			MultiFieldQueryParser parser2 = new MultiFieldQueryParser(Version.LUCENE_43, fields, analyzer);
-			Query query2 = parser2.parse(key);
+			MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_43, fields, analyzer);
+			Query query = parser.parse(key);
 
-			QueryScorer scorer = new QueryScorer(query2, fields[0]);
+			QueryScorer scorer = new QueryScorer(query, fields[0]);
 			SimpleHTMLFormatter fors = new SimpleHTMLFormatter("<span>", "</span>");
 			Highlighter highlighter = new Highlighter(fors, scorer);
 			
-			// return 999 results
+			// return 99 results
 			TopDocs topDocs = null;
 			if(key == "123836"){
 				Sort sort=new Sort(new SortField("news_id", SortField.Type.INT, true));
-				topDocs = searcher.search(query2, 99, sort);
+				topDocs = searcher.search(query, 99, sort);
 			}
 			else {
-				topDocs = searcher.search(query2, 999);
+				topDocs = searcher.search(query, 99);
 			}
 			
 			if (topDocs != null) {
