@@ -1,4 +1,18 @@
 <?php
+/***************************************************************************
+ *
+ * Copyright (c) 2017 Baidu.com, Inc. All Rights Reserved
+ *
+ **************************************************************************/
+
+/**
+ * @file Application/Home/Controller/BaseController.class.php
+ * @author yanjing05(com@baidu.com)
+ * @date 2017/04/15 14:22:39
+ * @brief
+ *
+ **/
+
 namespace Home\Controller;
 
 use Home\Common\Log;

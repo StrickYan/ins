@@ -1,4 +1,18 @@
 <?php
+/***************************************************************************
+ *
+ * Copyright (c) 2017 Baidu.com, Inc. All Rights Reserved
+ *
+ **************************************************************************/
+
+/**
+ * @file Application/Home/Controller/IndexController.class.php
+ * @author yanjing05(com@baidu.com)
+ * @date 2017/04/15 14:22:39
+ * @brief
+ *
+ **/
+
 namespace Home\Controller;
 
 use Home\Common\Client;
@@ -8,24 +22,15 @@ class IndexController extends Controller
 {
     public function index()
     {
-        // M('StatisticalData')->where('id=1')->setInc('login_times', 1);
-        // $script = "<script>var server = " . json_encode($_SERVER) . ";</script>";
-        // $this->assign('server', $script);
         $this->display();
     }
 
     public function addStatisticalData()
     {
-    	// $server = I('server', '');
-    	// if (!is_array($server)) {
-    	// 	$server = json_decode($server, true);
-    	// }
-    	
-    	$client = new Client();
-    	$data = $client->test();
-    	//$data = $client->testClient($server);
+        $client = new Client();
+        $data   = $client->test();
+        //$data = $client->testClient($server);
 
-    	M('StatisticalData')->add($data);
-
+        M('StatisticalData')->add($data);
     }
 }
