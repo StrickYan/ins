@@ -6,26 +6,24 @@
 	<link rel="stylesheet" href="__PUBLIC__/css/result.css">
 </head>
 <body>
-    <div id="logo">
+    <div id="logo" class="col-xs-12 col-sm-6 col-sm-offset-3">
     	<a href="http://ins.classmateer.com">
     		<img alt="logo" src="__PUBLIC__/img/default/Inspiration_logo.png">
     	</a>
     </div>
 
-	<form action="search" method="get">
-	    <div id="search_box" class="container">       
+	<form action="search" method="get" class="col-xs-12 col-sm-6 col-sm-offset-3" id="search">
+	    <div id="search_box" >       
 	    	<div class="row">
-				<div class="col-xs-12">
-					<div class="input-group">
-						<input type="text" class="form-control" id="query" name="q" value="{$input.q}" placeholder="公文通/id/标题/内容/发文单位" autocomplete="off">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="submit" id="btn_submit">Go</button>
-						</span>
-					</div>
-					<button type="button" class="btn btn-default btn-sm" id="sort_select">
-		                <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-	                </button>
+				<div class="input-group">
+					<input type="text" class="form-control" id="query" name="q" value="{$input.q}" placeholder="公文通/id/标题/内容/发文单位" autocomplete="off">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit" id="btn_submit">Go</button>
+					</span>
 				</div>
+				<button type="button" class="btn btn-default btn-sm" id="sort_select">
+	                <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </button>
 			</div>
 		</div>
 		<div id="sort_pick">
@@ -40,7 +38,7 @@
 			</label>
 	    </div>
 	</form>
-	<div id="page" data-page-num="{$input.p}">
+	<div id="page" class="col-xs-12 col-sm-6 col-sm-offset-3" data-page-num="{$input.p}">
 	    <div class="result" id="tips"></div>
 
 	    <div id="page_controller" class="result">
@@ -62,8 +60,8 @@
 	    </div>
 	</div>
 
-	<div id="footerinfo">
-		<p>&copy2017 Inspiration</p>
+	<div id="footerinfo" class="col-xs-12 col-sm-6 col-sm-offset-3 text-center">
+		&copy2017 Inspiration
 	</div>
 	
 	{$script_page}
