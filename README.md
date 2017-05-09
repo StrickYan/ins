@@ -1,6 +1,8 @@
+
+
 #深圳大学校内搜索引擎
 
-* Strick Yan 
+* Author: Strick Yan 
 
 ## 简介
 
@@ -20,8 +22,6 @@
 
 
 ## 效果图
-
-![](https://raw.githubusercontent.com/sk1275330626/ins/master/example_1.png)
 
 ![](https://raw.githubusercontent.com/sk1275330626/ins/master/example_2.png)
 
