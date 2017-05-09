@@ -1,5 +1,3 @@
-
-
 #深圳大学校内搜索引擎
 
 * Author: Strick Yan 
