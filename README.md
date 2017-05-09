@@ -1,5 +1,9 @@
 #深圳大学校内搜索引擎
 
+* Strick Yan 
+
+## 简介
+
 1. 搜索引擎让人们平等便捷地获取信息，找到所求。
 
 2. 本项目的愿景是实现一个基于Scrapy和Lucene的个人搜索引擎，该搜索引擎的主要功能有：
@@ -11,4 +15,13 @@
 3. 本项目采用了Python(Scrapy), Java(Lucene), PHP(ThinkPHP)，分别对应了爬虫模块，索引模块，查询模块的功能实现，并实现了不同语言的功能模块间的接口通讯，接口间数据交换格式为Json文本。
 
 4. 本仓库包含索引模块和查询模块的源码，爬虫模块源码在另一个仓库：[szu spider](https://github.com/sk1275330626/szuspider)
+
+
+
+
+## 效果图
+
+![](https://raw.githubusercontent.com/sk1275330626/ins/master/example_1.png)
+
+![](https://raw.githubusercontent.com/sk1275330626/ins/master/example_2.png)
 
