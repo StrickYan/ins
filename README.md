@@ -14,12 +14,12 @@
 
 3. 本项目采用了Python(Scrapy), Java(Lucene), PHP(ThinkPHP)，分别对应了爬虫模块，索引模块，查询模块的功能实现，并实现了不同语言的功能模块间的接口通讯，接口间数据交换格式为Json文本。
 
-4. 本仓库包含索引模块和查询模块的源码，爬虫模块源码在另一个仓库：[szu spider](https://github.com/sk1275330626/szuspider)
+4. 本仓库包含索引模块和查询模块的源码，爬虫模块源码在另一个仓库：[szu spider](https://github.com/StrickYan/szuspider)
 
 
 
 
 ## 效果图
 
-![](https://raw.githubusercontent.com/sk1275330626/ins/master/example_2.png)
+![](https://raw.githubusercontent.com/StrickYan/ins/master/example_2.png)
 
