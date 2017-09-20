@@ -134,3 +134,9 @@ body {
 #search_box, #sort_pick {
     margin-bottom: 10px;
 }
+
+/*@media (min-width: 800px) {*/
+    /*#logo, #search, #page, #footerinfo {*/
+        /*width: 50rem;*/
+    /*}*/
+/*}*/
