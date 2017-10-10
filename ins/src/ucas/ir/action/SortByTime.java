@@ -17,14 +17,14 @@ package ucas.ir.action;
 import java.util.Comparator;
 import ucas.ir.pojo.*;
 
-class SortByTime implements Comparator<Object>{
+class SortByTime implements Comparator<Object> {
 
 	@Override
 	public int compare(Object o1, Object o2) {
-		News n1=(News) o1;
-		News n2=(News) o2;
-		
+		News n1 = (News) o1;
+		News n2 = (News) o2;
+
 		return n2.getTime().compareTo(n1.getTime());
 	}
-	
+
 }

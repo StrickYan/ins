@@ -84,12 +84,12 @@ public class SearchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// handle form parm 
+		// handle form parm
 		String query = request.getParameter("q"); // query str
 		query = new String(query.getBytes("iso8859-1"), "UTF-8");
 		query = query.trim();
 
-		String pageNum = request.getParameter("p"); // page 
+		String pageNum = request.getParameter("p"); // page
 		int p = pageNum == null ? 1 : Integer.parseInt(pageNum);
 
 		String sortMethod = request.getParameter("sort"); // sort type
@@ -101,16 +101,16 @@ public class SearchServlet extends HttpServlet {
 		long startTime = System.currentTimeMillis();// start time
 
 		// index save location
-        //String indexPathStr = "D:/java/data/index/";
+		// String indexPathStr = "D:/java/data/index/";
 		String indexPathStr = "/tmp/szunews/index/";
-		
-		String rets = "";//api return json data
-		boolean success = false; //query result
-		
-		if(query == null || "".equals(query)){
-			query = "123836"; //没有输入关键词则展示全部索引记录
+
+		String rets = "";// api return json data
+		boolean success = false; // query result
+
+		if (query == null || "".equals(query)) {
+			query = "123836"; // 没有输入关键词则展示全部索引记录
 		}
-		if(query != null && "".equals(query) != true) {
+		if (query != null && "".equals(query) != true) {
 			ArrayList<News> newsList = getTopDoc(query, indexPathStr);
 			System.out.println("newslist length:" + newsList.size());
 
@@ -121,8 +121,7 @@ public class SearchServlet extends HttpServlet {
 			// result sort by time
 			if ("123836".equals(query) != true && "time".equals(sortMethod)) {
 				Collections.sort(newsList, new SortByTime());
-			}
-			else if ("123836".equals(query) != true && "heat".equals(sortMethod)) {
+			} else if ("123836".equals(query) != true && "heat".equals(sortMethod)) {
 				Collections.sort(newsList, new SortByHeat());
 			}
 
@@ -158,25 +157,24 @@ public class SearchServlet extends HttpServlet {
 			// request.getRequestDispatcher("result.jsp").forward(request, response);
 
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("state", success); //query status
-			map.put("queryback",query); //query str
-			map.put("time",(double) (endTime - startTime) / 1000); //query time
-			map.put("page",page); //result of page
-			map.put("sort",sortMethod); //sort
-			map.put("newslist",pagelist); //query result
-			
-			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-			rets = gson.toJson(map); //map to json
+			map.put("state", success); // query status
+			map.put("queryback", query); // query str
+			map.put("time", (double) (endTime - startTime) / 1000); // query time
+			map.put("page", page); // result of page
+			map.put("sort", sortMethod); // sort
+			map.put("newslist", pagelist); // query result
 
-		}
-		else {
+			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+			rets = gson.toJson(map); // map to json
+
+		} else {
 			success = false;
 		}
-		
-		if(success == false){
+
+		if (success == false) {
 			rets = "";
 		}
-		
+
 		// return data to api:(http://localhost:8080/ins/search?q=xxx&p=xxx&sort=xxx)
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -195,35 +193,34 @@ public class SearchServlet extends HttpServlet {
 			if (indexPath.exists() != true) {
 				indexPath.mkdirs();
 			}
-			// set open index location 
+			// set open index location
 			directory = FSDirectory.open(indexPath);
 			// mkdir indexSearcher
 			DirectoryReader dReader = DirectoryReader.open(directory);
 			IndexSearcher searcher = new IndexSearcher(dReader);
 
 			String[] fields = { "news_title", "news_article", "news_id", "news_source", "sign" };
-			
+
 			// set analyzer type
-			//Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
-			Analyzer analyzer = new IKAnalyzer(true); 
-			
+			// Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
+			Analyzer analyzer = new IKAnalyzer(true);
+
 			MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_43, fields, analyzer);
 			Query query = parser.parse(key);
 
 			QueryScorer scorer = new QueryScorer(query, fields[0]);
 			SimpleHTMLFormatter fors = new SimpleHTMLFormatter("<span>", "</span>");
 			Highlighter highlighter = new Highlighter(fors, scorer);
-			
+
 			// return 99 results
 			TopDocs topDocs = null;
-			if(key == "123836"){
-				Sort sort=new Sort(new SortField("news_id", SortField.Type.INT, true));
+			if (key == "123836") {
+				Sort sort = new Sort(new SortField("news_id", SortField.Type.INT, true));
 				topDocs = searcher.search(query, 99, sort);
-			}
-			else {
+			} else {
 				topDocs = searcher.search(query, 99);
 			}
-			
+
 			if (topDocs != null) {
 				totalNews = topDocs.totalHits;
 				System.out.println("query result number:" + totalNews);
@@ -241,19 +238,18 @@ public class SearchServlet extends HttpServlet {
 					tokenStream = TokenSources.getAnyTokenStream(searcher.getIndexReader(), topDocs.scoreDocs[i].doc,
 							fields[1], analyzer);
 					String hl_summary = highlighter.getBestFragment(tokenStream, doc.get("news_article"));
-					
+
 					String article = "";
-					try{
+					try {
 						article = doc.get("news_article").substring(0, 100);
-					}
-					catch (Exception e){
+					} catch (Exception e) {
 						article = "";
 					}
-					
+
 					News news = new News(doc.get("news_id"), hl_title != null ? hl_title : doc.get("news_title"),
 							doc.get("news_keywords"), doc.get("news_posttime"), doc.get("news_source"),
-							hl_summary != null ? hl_summary : article, doc.get("news_total"),
-							doc.get("news_url"), doc.get("news_reply"), doc.get("news_show"));
+							hl_summary != null ? hl_summary : article, doc.get("news_total"), doc.get("news_url"),
+							doc.get("news_reply"), doc.get("news_show"));
 					newsList.add(news);
 				}
 			}

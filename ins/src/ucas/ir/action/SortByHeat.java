@@ -17,19 +17,17 @@ package ucas.ir.action;
 import java.util.Comparator;
 import ucas.ir.pojo.*;
 
-public class SortByHeat implements Comparator<Object>{
+public class SortByHeat implements Comparator<Object> {
 	@Override
 	public int compare(Object o1, Object o2) {
-		News n1=(News) o1;
-		News n2=(News) o2;
-		
-		if(Integer.parseInt(n2.getShow()) > Integer.parseInt(n1.getShow())){
+		News n1 = (News) o1;
+		News n2 = (News) o2;
+
+		if (Integer.parseInt(n2.getShow()) > Integer.parseInt(n1.getShow())) {
 			return 1;
-		}
-		else if(Integer.parseInt(n2.getShow()) < Integer.parseInt(n1.getShow())){
+		} else if (Integer.parseInt(n2.getShow()) < Integer.parseInt(n1.getShow())) {
 			return -1;
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}

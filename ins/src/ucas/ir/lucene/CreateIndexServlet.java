@@ -52,35 +52,36 @@ import ucas.ir.pojo.News;
  */
 public class CreateIndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-//	public static String indexRoute = "D:/java/data/index/"; //索引存放位置
-//	public static String jsonFileRoute = "D:/java/data/json/"; //json原数据文件存放位置
-	
-	public static String indexRoute = "/tmp/szunews/index/"; //索引存放位置
-	public static String jsonFileRoute = "/tmp/szunews/json/"; //json原数据文件存放位置
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CreateIndexServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	// public static String indexRoute = "D:/java/data/index/"; //索引存放位置
+	// public static String jsonFileRoute = "D:/java/data/json/"; //json原数据文件存放位置
+
+	public static String indexRoute = "/tmp/szunews/index/"; // 索引存放位置
+	public static String jsonFileRoute = "/tmp/szunews/json/"; // json原数据文件存放位置
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CreateIndexServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		long startTime = System.currentTimeMillis();// start time
-		
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
+
 		// 第一步：创建分词器
-        //Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
-		Analyzer analyzer = new IKAnalyzer(true); 
-		
+		// Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
+		Analyzer analyzer = new IKAnalyzer(true);
+
 		// 第二步：创建indexWriter配置信息
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(Version.LUCENE_43, analyzer);
 		// 第三步：设置索引的打开方式
@@ -112,26 +113,26 @@ public class CreateIndexServlet extends HttpServlet {
 		while (iter.hasNext()) {
 			String file_name = iter.next();
 			// System.out.println("当前iter:" + file_name);
-			out.write("cur iter: " + file_name +"\n");
+			out.write("cur iter: " + file_name + "\n");
 			News news = getNews(jsonFileRoute + file_name);
 			Document doc = new Document();
 			if (news != null) {
-				//System.out.println(news.getTitle());
-				out.write("title: " + news.getTitle() +"\n");
+				// System.out.println(news.getTitle());
+				out.write("title: " + news.getTitle() + "\n");
 
-				doc.add(new StringField("news_id", news.getId(), Store.YES)); //索引 不分词
-				doc.add(new TextField("news_title", news.getTitle(), Store.YES)); //索引 分词
-				doc.add(new TextField("news_article", news.getArtical(), Store.YES)); //索引 分词
-				doc.add(new TextField("news_source", news.getSource(), Store.YES)); //索引 分词
-				doc.add(new StoredField("news_show", news.getShow())); //不索引 只存储 
-				doc.add(new StoredField("news_posttime", news.getTime())); //不索引 只存储
-				doc.add(new StringField("sign", "123836", Store.YES)); //索引 不分词  该字段目的是为了返回全部索引记录
-				
-				//doc.add(new TextField("news_keywords", news.getKeyword(), Store.YES));
-				//doc.add(new TextField("news_total", news.getTotal(), Store.YES));
-				//doc.add(new TextField("news_url", news.getURL(), Store.YES));
-				//doc.add(new TextField("news_reply", news.getReply(), Store.YES));
-				
+				doc.add(new StringField("news_id", news.getId(), Store.YES)); // 索引 不分词
+				doc.add(new TextField("news_title", news.getTitle(), Store.YES)); // 索引 分词
+				doc.add(new TextField("news_article", news.getArtical(), Store.YES)); // 索引 分词
+				doc.add(new TextField("news_source", news.getSource(), Store.YES)); // 索引 分词
+				doc.add(new StoredField("news_show", news.getShow())); // 不索引 只存储
+				doc.add(new StoredField("news_posttime", news.getTime())); // 不索引 只存储
+				doc.add(new StringField("sign", "123836", Store.YES)); // 索引 不分词 该字段目的是为了返回全部索引记录
+
+				// doc.add(new TextField("news_keywords", news.getKeyword(), Store.YES));
+				// doc.add(new TextField("news_total", news.getTotal(), Store.YES));
+				// doc.add(new TextField("news_url", news.getURL(), Store.YES));
+				// doc.add(new TextField("news_reply", news.getReply(), Store.YES));
+
 				try {
 					indexWriter.addDocument(doc);
 					indexWriter.commit();
@@ -147,19 +148,19 @@ public class CreateIndexServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		long endTime = System.currentTimeMillis();// end time
 		long Time = endTime - startTime;
-		
-		out.write("startTime: " + startTime +"\n");
-		out.write("endTime: " + endTime +"\n");
-		out.write("create index cost : " + Time + " ms." +"\n");
-		
-		out.write("This time operate index's number: " + filenamelist.size() +"\n");
-		out.write("index create success!" +"\n");
-		//System.out.println("create index cost " + Time + " ms.");
-		//System.out.println("index create success!");
-		
+
+		out.write("startTime: " + startTime + "\n");
+		out.write("endTime: " + endTime + "\n");
+		out.write("create index cost : " + Time + " ms." + "\n");
+
+		out.write("This time operate index's number: " + filenamelist.size() + "\n");
+		out.write("index create success!" + "\n");
+		// System.out.println("create index cost " + Time + " ms.");
+		// System.out.println("index create success!");
+
 		out.flush();
 		out.close();
 	}
@@ -167,11 +168,12 @@ public class CreateIndexServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
+
 	// 获取news目录下所有json文件的文件名,返回文件名数组
 	public static ArrayList<String> getfileName() {
 		ArrayList<String> arrlist = new ArrayList<String>();
@@ -183,7 +185,7 @@ public class CreateIndexServlet extends HttpServlet {
 			}
 		}
 
-		//System.out.println(arrlist.size());
+		// System.out.println(arrlist.size());
 		return arrlist;
 	}
 
@@ -192,8 +194,8 @@ public class CreateIndexServlet extends HttpServlet {
 		News news = new News();
 		try {
 			JsonParser jParser = new JsonParser();
-//			JsonObject jObject = (JsonObject) jParser.parse(new FileReader(path));
-			JsonObject jObject = (JsonObject) jParser.parse(new InputStreamReader(new FileInputStream(path),"utf-8"));
+			// JsonObject jObject = (JsonObject) jParser.parse(new FileReader(path));
+			JsonObject jObject = (JsonObject) jParser.parse(new InputStreamReader(new FileInputStream(path), "utf-8"));
 			String id = jObject.get("id").getAsString();
 			String title = jObject.get("title").getAsString().trim();
 			String time = jObject.get("date").getAsString().trim();
@@ -201,10 +203,10 @@ public class CreateIndexServlet extends HttpServlet {
 			String artical = jObject.get("content").getAsString();
 			String uRL = jObject.get("id").getAsString();
 			String show = jObject.get("click_in_content").getAsString();
-			
-			//String keyword = jObject.get("Keyword").getAsString();
-			//String total = jObject.get("Total").getAsString();
-			//String reply = jObject.get("Reply").getAsString();
+
+			// String keyword = jObject.get("Keyword").getAsString();
+			// String total = jObject.get("Total").getAsString();
+			// String reply = jObject.get("Reply").getAsString();
 			String keyword = "test";
 			String total = "test";
 			String reply = "test";
@@ -212,7 +214,7 @@ public class CreateIndexServlet extends HttpServlet {
 			news = new News(id, title, keyword, time, source, artical, total, uRL, reply, show);
 			return news;
 		} catch (Exception e) {
-			System.out.println("get news error: "+e +"\n");
+			System.out.println("get news error: " + e + "\n");
 			return null;
 		}
 	}

@@ -38,20 +38,20 @@ import com.google.gson.JsonParser;
 import ucas.ir.pojo.News;
 
 public class CreateIndex {
-	
-//	public static String indexRoute = "D:/java/data/index/"; //索引存放位置
-//	public static String jsonFileRoute = "D:/java/data/json/"; //json原数据文件存放位置
-	
-	public static String indexRoute = "/tmp/szunews/index/"; //索引存放位置
-	public static String jsonFileRoute = "/tmp/szunews/json/"; //json原数据文件存放位置
+
+	// public static String indexRoute = "D:/java/data/index/"; //索引存放位置
+	// public static String jsonFileRoute = "D:/java/data/json/"; //json原数据文件存放位置
+
+	public static String indexRoute = "/tmp/szunews/index/"; // 索引存放位置
+	public static String jsonFileRoute = "/tmp/szunews/json/"; // json原数据文件存放位置
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();// start time
-		
+
 		// 第一步：创建分词器
-        //Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
-		Analyzer analyzer = new IKAnalyzer(true); 
-		
+		// Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
+		Analyzer analyzer = new IKAnalyzer(true);
+
 		// 第二步：创建indexWriter配置信息
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(Version.LUCENE_43, analyzer);
 		// 第三步：设置索引的打开方式
@@ -86,21 +86,21 @@ public class CreateIndex {
 			News news = getNews(jsonFileRoute + file_name);
 			Document doc = new Document();
 			if (news != null) {
-				//System.out.println(news.getTitle());
+				// System.out.println(news.getTitle());
 
-				doc.add(new StringField("news_id", news.getId(), Store.YES)); //索引 不分词
-				doc.add(new TextField("news_title", news.getTitle(), Store.YES)); //索引 分词
-				doc.add(new TextField("news_article", news.getArtical(), Store.YES)); //索引 分词
-				doc.add(new TextField("news_source", news.getSource(), Store.YES)); //索引 分词
-				doc.add(new StoredField("news_show", news.getShow())); //不索引 只存储 
-				doc.add(new StoredField("news_posttime", news.getTime())); //不索引 只存储
-				doc.add(new StringField("sign", "123836", Store.YES)); //索引 不分词  该字段目的是为了返回全部索引记录
-				
-				//doc.add(new TextField("news_keywords", news.getKeyword(), Store.YES));
-				//doc.add(new TextField("news_total", news.getTotal(), Store.YES));
-				//doc.add(new TextField("news_url", news.getURL(), Store.YES));
-				//doc.add(new TextField("news_reply", news.getReply(), Store.YES));
-				
+				doc.add(new StringField("news_id", news.getId(), Store.YES)); // 索引 不分词
+				doc.add(new TextField("news_title", news.getTitle(), Store.YES)); // 索引 分词
+				doc.add(new TextField("news_article", news.getArtical(), Store.YES)); // 索引 分词
+				doc.add(new TextField("news_source", news.getSource(), Store.YES)); // 索引 分词
+				doc.add(new StoredField("news_show", news.getShow())); // 不索引 只存储
+				doc.add(new StoredField("news_posttime", news.getTime())); // 不索引 只存储
+				doc.add(new StringField("sign", "123836", Store.YES)); // 索引 不分词 该字段目的是为了返回全部索引记录
+
+				// doc.add(new TextField("news_keywords", news.getKeyword(), Store.YES));
+				// doc.add(new TextField("news_total", news.getTotal(), Store.YES));
+				// doc.add(new TextField("news_url", news.getURL(), Store.YES));
+				// doc.add(new TextField("news_reply", news.getReply(), Store.YES));
+
 				try {
 					indexWriter.addDocument(doc);
 					indexWriter.commit();
@@ -151,10 +151,10 @@ public class CreateIndex {
 			String artical = jObject.get("content").getAsString();
 			String uRL = jObject.get("id").getAsString();
 			String show = jObject.get("click_in_content").getAsString();
-			
-			//String keyword = jObject.get("Keyword").getAsString();
-			//String total = jObject.get("Total").getAsString();
-			//String reply = jObject.get("Reply").getAsString();
+
+			// String keyword = jObject.get("Keyword").getAsString();
+			// String total = jObject.get("Total").getAsString();
+			// String reply = jObject.get("Reply").getAsString();
 			String keyword = "test";
 			String total = "test";
 			String reply = "test";
@@ -162,9 +162,9 @@ public class CreateIndex {
 			news = new News(id, title, keyword, time, source, artical, total, uRL, reply, show);
 			return news;
 		} catch (Exception e) {
-			System.out.println("get news error: "+e);
+			System.out.println("get news error: " + e);
 			return null;
 		}
 	}
-	
+
 }
