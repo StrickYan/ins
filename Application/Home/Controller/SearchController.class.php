@@ -49,7 +49,7 @@ class SearchController extends BaseController
         $input['p']    = I('p', 1, 'intval');
         $input['sort'] = I('sort', '');
 
-        $url      = "http://localhost:8080/ins/search";
+        $url      = "http://localhost:8070/ins/search";
         $response = self::postData($url, $input);
         $response = json_decode($response, true); //json转array
 
