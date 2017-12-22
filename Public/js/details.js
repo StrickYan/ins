@@ -1,5 +1,5 @@
 $(function() {
-    getQueryRusultDetails(view_id);
+    getQueryResultDetails(view_id);
 
     // 自动隐藏导航栏
     $(window).scroll(function() {
@@ -18,7 +18,7 @@ $(function() {
 
 });
 // 获取具体一条搜索结果详情
-function getQueryRusultDetails(view_id) {
+function getQueryResultDetails(view_id) {
     $.ajax({
         type: "POST",
         data: {
