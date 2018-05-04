@@ -1,6 +1,6 @@
-# 深圳大学校内搜索引擎
+# 搜索引擎 by深圳大学
 
-* Author: Strick Yan 
+* Author: StrickYan 
 
 ## 简介
 
@@ -17,9 +17,6 @@
 4. 本仓库包含索引模块和查询模块的源码，爬虫模块源码在另一个仓库：[szu spider](https://github.com/StrickYan/szuspider)
 
 
-
-
 ## 效果图
 
 ![](https://raw.githubusercontent.com/StrickYan/ins/master/example_2.png)
-
