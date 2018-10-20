@@ -1,5 +1,5 @@
 $(function() {
-    addStatisticalData();
+    // addStatisticalData();
     if (window.screen.width < window.screen.height) {
         $('#about_img img').css("width", "100%");
     }
@@ -18,9 +18,9 @@ $(function() {
     });
 });
 // 增加统计数据
-function addStatisticalData(server) {
+function addStatisticalData() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         data: {},
         dataType: "json",
         url: "Index/addStatisticalData",
